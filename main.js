@@ -6,21 +6,37 @@ const fieldCharacter = "░";
 const pathCharacter = "*";
 
 class Field {
-    constructor(field) {
-        this.field = field;
+    constructor() {
+        this.field = this.constructor.generateField(10, 4);
     }
     print() {
         for (let i = 0; i < this.field.length; i++) {
             console.log(this.field[i].join(" "));
         }
     }
+
+    static generateField(height, width) {
+        // Create playing field
+        let newField = [];
+        const options = [fieldCharacter, hole, fieldCharacter];
+        for (let i = 0; i < height; i++) {
+            const result = [];
+            for (let j = 0; j < width; j++) {
+                result.push(options[Math.floor(Math.random() * 3)]);
+            }
+            newField.push(result);
+        }
+        // Place hat at random place
+        const randomRow = Math.floor(Math.random() * height);
+        const randomCol = Math.floor(Math.random() * width);
+        newField[randomRow][randomCol] = hat;
+        //set starting pos
+        newField[0][0] = pathCharacter;
+        return newField;
+    }
 }
 
-const myField = new Field([
-    ["*", "░", "░"],
-    ["░", "O", "░"],
-    ["░", "^", "░"],
-]);
+const myField = new Field();
 
 let foundHat = false;
 let row = 0;
